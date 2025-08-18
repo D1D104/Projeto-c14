@@ -1,0 +1,41 @@
+# Ambiente virtual do Pipenv
+.venv/
+venv/
+ENV/
+env/
+
+# Arquivos de cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Arquivos de build/distribuição
+build/
+dist/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Testes e cobertura
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.dmypy.json
+.dmypy
+
+# Configurações de editores/IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
