@@ -16,7 +16,7 @@ Este repositório demonstra como configurar um ambiente isolado com Pipenv, inst
 
 ```bash
 pip install pipenv
-pipenv install
+pipenv install requests
 pipenv shell
 pipenv install
 pipenv shell
