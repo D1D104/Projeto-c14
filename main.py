@@ -6,7 +6,7 @@ def fetch_github_data():
         response = requests.get("https://api.github.com", timeout=5)
         response.raise_for_status()
         try:
-            url = response.json().get("current_user", "Chave não encontrada")
+            url = response.json().get("current_user_url", "Chave não encontrada")
         except ValueError:
             return {"status": "error", "message": "Erro inesperado: resposta não é JSON válido"}
         return {"status": "success", "message": "Conexão bem-sucedida", "url": url}
