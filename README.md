@@ -16,8 +16,8 @@ Este repositório demonstra como configurar um ambiente isolado com Pipenv, inst
 
 ```bash
 pip install pipenv
-pipenv install requests
+pipenv install --dev
 pipenv shell
-pipenv run python main.py
+python main.py
 
 ```
