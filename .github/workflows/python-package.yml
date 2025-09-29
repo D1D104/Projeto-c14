@@ -48,3 +48,11 @@ jobs:
         with:
           name: executavel
           path: dist/main
+
+  notification:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enviar email
+        run: sh scripts/sendEmail.sh
