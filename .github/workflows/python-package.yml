@@ -1,0 +1,50 @@
+name: CI Pipeline - C214
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Instalar Pipenv e dependências
+        run: |
+          pip install pipenv
+          pipenv --python $(which python) install --dev
+      - name: Rodar testes
+        run: pipenv run pytest --junitxml=report.xml
+        env:
+          PYTHONPATH: .
+      - name: Salvar relatório de testes
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-testes
+          path: report.xml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Instalar dependências + PyInstaller
+        run: |
+          pip install pipenv
+          pipenv install
+          pipenv install pyinstaller
+      - name: Empacotar executável
+        run: pipenv run pyinstaller --onefile main.py
+      - name: Salvar executável
+        uses: actions/upload-artifact@v4
+        with:
+          name: executavel
+          path: dist/main
