@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pyinstaller = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
