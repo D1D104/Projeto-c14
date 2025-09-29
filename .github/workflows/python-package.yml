@@ -39,7 +39,7 @@ jobs:
       - name: Instalar dependências + PyInstaller
         run: |
           pip install pipenv
-          pipenv install
+          pipenv --python $(which python) install
           pipenv install pyinstaller
       - name: Empacotar executável
         run: pipenv run pyinstaller --onefile main.py
