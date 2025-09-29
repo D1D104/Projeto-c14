@@ -14,10 +14,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Instalar dependências
+      - name: Instalar Pipenv e dependências
         run: |
           pip install pipenv
-          pipenv install --dev
+          pipenv --python $(which python) install --dev
       - name: Rodar testes
         run: pipenv run pytest --junitxml=report.xml
         env:
