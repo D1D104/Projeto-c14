@@ -49,20 +49,20 @@ jobs:
           name: executavel
           path: dist/main
 
-notification:
-  runs-on: ubuntu-latest
-  needs: [tests, build]
-  if: always()
-  steps:
-    - uses: actions/checkout@v4
-    - name: Instalar dependências para envio de email
-      run: pip install email-validator
-    - name: Enviar email
-      run: python scripts/send_email.py
-      env:
-        NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
-        FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
-        SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-        SMTP_PORT: ${{ secrets.SMTP_PORT }}
-        SMTP_USER: ${{ secrets.SMTP_USER }}
-        SMTP_PASS: ${{ secrets.SMTP_PASS }}
+  notification:
+    runs-on: ubuntu-latest
+    needs: [tests, build]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar dependências para envio de email
+        run: pip install email-validator
+      - name: Enviar email
+        run: python scripts/send_email.py
+        env:
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
