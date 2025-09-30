@@ -54,9 +54,14 @@ jobs:
     needs: [tests, build]
     if: always()
     steps:
-      - name: Instalando mailutils
-        run: sudo apt-get install -y mailutils
-      - name: Enviando o email
-        run: echo "Pipeline Executado!" | mail -s "Status da Pipeline" ${{ secrets.NOTIFY_EMAIL }}
+      - name: Instalar dependências para envio de email
+        run: pip install smtplib email-validator
+      - name: Enviar email
+        run: python scripts/send_email.py
         env:
           NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
