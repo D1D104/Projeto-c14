@@ -4,14 +4,15 @@ from email.mime.text import MIMEText
 
 def main():
     to_email = os.environ.get('NOTIFY_EMAIL')
-    if not to_email:
-        print('NOTIFY_EMAIL não definido')
-        exit(1)
-    from_email = os.environ.get('FROM_EMAIL', to_email)
-    smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
-    smtp_port = int(os.environ.get('SMTP_PORT', '587'))
+    from_email = os.environ.get('FROM_EMAIL')
+    smtp_server = os.environ.get('SMTP_SERVER')
+    smtp_port = os.environ.get('SMTP_PORT')
     smtp_user = os.environ.get('SMTP_USER')
     smtp_pass = os.environ.get('SMTP_PASS')
+
+    if not all([to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_pass]):
+        print('Variáveis de ambiente para envio de email não definidas. Pulando envio de email.')
+        return
 
     msg = MIMEText('Pipeline executado!')
     msg['Subject'] = 'Status da Pipeline'
@@ -19,15 +20,14 @@ def main():
     msg['To'] = to_email
 
     try:
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
+        with smtplib.SMTP(smtp_server, int(smtp_port)) as server:
             server.starttls()
-            if smtp_user and smtp_pass:
-                server.login(smtp_user, smtp_pass)
+            server.login(smtp_user, smtp_pass)
             server.sendmail(from_email, [to_email], msg.as_string())
         print('Email enviado com sucesso!')
     except Exception as e:
         print(f'Erro ao enviar email: {e}')
-        exit(1)
+        return
 
 if __name__ == '__main__':
     main()
