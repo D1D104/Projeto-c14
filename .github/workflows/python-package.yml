@@ -55,7 +55,7 @@ jobs:
     if: always()
     steps:
       - name: Instalar dependências para envio de email
-        run: pip install smtplib email-validator
+        run: pip install email-validator
       - name: Enviar email
         run: python scripts/send_email.py
         env:
